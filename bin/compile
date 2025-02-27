@@ -25,11 +25,22 @@ if [[ ! -d "${APPS_DIR}/${APP_NAME}" ]]; then
 fi
 
 echo "Identified app directory: ${APPS_DIR}/${APP_NAME}"
+echo "Validating procfile exists..."
 
+if [[ ! -f "${APPS_DIR}/${APP_NAME}/Procfile" ]]; then
+    echo "No Procfile found in app directory, exiting..."
+    exit 1
+fi
+
+# copy procfile to root folder
+echo "Copying Procfile to root folder..."
+cp "${APPS_DIR}/${APP_NAME}/Procfile" "${BUILD_DIR}/Procfile"
+
+echo "Identifying unused apps to delete..."
 APPS_TO_DELETE=$(find "${APPS_DIR}" ! -path "${APPS_DIR}" ! -name "${APP_NAME}" -maxdepth 1)
-echo "Identified apps to delete;"
+echo "Deleting apps;"
 echo "${APPS_TO_DELETE}"
 
-# TODO
-echo "TODO..."
-exit 1
+rm -rf ${APPS_TO_DELETE}
+
+exit 0
