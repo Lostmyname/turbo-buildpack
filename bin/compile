@@ -2,6 +2,8 @@
 
 # https://devcenter.heroku.com/articles/buildpack-api#bin-compile
 
+set -Eeuo pipefail
+
 BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
@@ -24,7 +26,7 @@ fi
 
 echo "Identified app directory: ${APPS_DIR}/${APP_NAME}"
 
-APPS_TO_DELETE=$(find "${APPS_DIR}" ! -path "${APPS_DIR}" ! -name "${APP_NAME}" -depth 1)
+APPS_TO_DELETE=$(find "${APPS_DIR}" ! -path "${APPS_DIR}" ! -name "${APP_NAME}" -maxdepth 1)
 echo "Identified apps to delete;"
 echo "${APPS_TO_DELETE}"
 
