@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+echo "Turbo repo - single app deployment"
+exit 0
